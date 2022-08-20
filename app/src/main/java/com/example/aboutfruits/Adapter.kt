@@ -1,16 +1,19 @@
 package com.example.aboutfruits
 
-import android.content.Context
-import android.graphics.Movie
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class Adapter(context: Context) : RecyclerView.Adapter<Adapter.ViewHolder>() {
+class Adapter : RecyclerView.Adapter<Adapter.ViewHolder>() {
 
     private var fruitList = listOf<Fruits>()
+
+    fun setFruitListItems(fruitList: List<Fruits>) {
+        this.fruitList = fruitList;
+        notifyDataSetChanged()
+    }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val name: TextView = view.findViewById(R.id.name)
@@ -36,19 +39,14 @@ class Adapter(context: Context) : RecyclerView.Adapter<Adapter.ViewHolder>() {
         holder.family.text = "Family: " + fruitList[position].family
         holder.genus.text = "Genus: " + fruitList[position].genus
         holder.order.text = "Order: " + fruitList[position].order
-        holder.carbohydrates.text = "Carbohydrates: " + fruitList[position].nutritions.carbohydrates.toString()
-        holder.protein.text ="Protein: "+ fruitList[position].nutritions.carbohydrates.toString()
-        holder.fat.text ="Fat: " + fruitList[position].nutritions.fat.toString()
+        holder.carbohydrates.text =
+            "Carbohydrates: " + fruitList[position].nutritions.carbohydrates.toString()
+        holder.protein.text = "Protein: " + fruitList[position].nutritions.carbohydrates.toString()
+        holder.fat.text = "Fat: " + fruitList[position].nutritions.fat.toString()
         holder.calories.text = "Calories: " + fruitList[position].nutritions.calories.toString()
         holder.sugar.text = "Sugar: " + fruitList[position].nutritions.sugar.toString()
 
     }
-
-    fun setFruitListItems(fruitList: List<Fruits>) {
-        this.fruitList = fruitList;
-        notifyDataSetChanged()
-    }
-
 
     override fun getItemCount() = fruitList.size
 }
