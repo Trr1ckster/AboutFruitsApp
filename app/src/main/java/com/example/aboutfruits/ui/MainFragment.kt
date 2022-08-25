@@ -1,22 +1,22 @@
-package com.example.aboutfruits
+package com.example.aboutfruits.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.example.aboutfruits.adapter.Adapter
 import com.example.aboutfruits.databinding.FragmentMainBinding
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class MainFragment : Fragment() {
 
     private lateinit var binding: FragmentMainBinding
     private lateinit var recyclerAdapter: Adapter
+
+    private val viewModel: FruitsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,22 +29,10 @@ class MainFragment : Fragment() {
         recyclerAdapter = Adapter()
         binding.recyclerView.adapter = recyclerAdapter
 
-        getAllData()
+        viewModel.fruitsLiveData.observe(viewLifecycleOwner) {
+            recyclerAdapter.setFruitListItems(it)
+        }
 
         return binding.root
-    }
-
-    private fun getAllData() {
-        FruitsApi.retrofitService.getAllFruits().enqueue(object : Callback<List<Fruits>?> {
-            override fun onResponse(call: Call<List<Fruits>?>, response: Response<List<Fruits>?>) {
-                Log.d("Check123", response.body()!!.toString())
-                recyclerAdapter.setFruitListItems(response.body()!!)
-            }
-
-            override fun onFailure(call: Call<List<Fruits>?>, t: Throwable) {
-                binding.errorText.text = "Error"
-                Log.d("Check123", "Error")
-            }
-        })
     }
 }

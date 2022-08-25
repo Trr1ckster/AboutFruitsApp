@@ -1,4 +1,4 @@
-package com.example.aboutfruits
+package com.example.aboutfruits.model
 
 data class Fruits(
     val name: String,
@@ -6,7 +6,8 @@ data class Fruits(
     val family: String,
     val genus: String,
     val order: String,
-    val nutritions: Nutritions)
+    val nutritions: Nutritions
+)
 
 data class Nutritions(
     val carbohydrates: Double,

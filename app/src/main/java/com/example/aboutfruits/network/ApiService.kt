@@ -1,9 +1,9 @@
-package com.example.aboutfruits
+package com.example.aboutfruits.network
 
+import com.example.aboutfruits.model.Fruits
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import retrofit2.http.GET
 
 
@@ -19,7 +19,6 @@ interface FruitApiService {
     @GET("all")
     fun getAllFruits(): Call<List<Fruits>>
 }
-
 
 object FruitsApi {
     val retrofitService: FruitApiService = retrofit.create(FruitApiService::class.java)

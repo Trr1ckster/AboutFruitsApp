@@ -4,6 +4,7 @@ package com.example.aboutfruits
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.aboutfruits.databinding.ActivityMainBinding
+import com.example.aboutfruits.ui.MainFragment
 
 
 class MainActivity : AppCompatActivity() {
