@@ -1,54 +1,59 @@
 package com.example.aboutfruits.adapter
 
+import android.graphics.ColorSpace
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.aboutfruits.R
+import com.example.aboutfruits.databinding.FruitItemBinding
 import com.example.aboutfruits.model.Fruits
 
-class Adapter : RecyclerView.Adapter<Adapter.ViewHolder>() {
+class Adapter(private val onItemClick: ClickListener) :
+    RecyclerView.Adapter<Adapter.ViewHolder>() {
 
     private var fruitList = listOf<Fruits>()
 
     fun setFruitListItems(fruitList: List<Fruits>) {
         this.fruitList = fruitList
-        notifyDataSetChanged()
+        differ.submitList(fruitList)
     }
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val name: TextView = view.findViewById(R.id.name)
-        val family: TextView = view.findViewById(R.id.family)
-        val genus: TextView = view.findViewById(R.id.genus)
-        val order: TextView = view.findViewById(R.id.order)
-        val carbohydrates: TextView = view.findViewById(R.id.carbohydrates)
-        val protein: TextView = view.findViewById(R.id.protein)
-        val fat: TextView = view.findViewById(R.id.fat)
-        val calories: TextView = view.findViewById(R.id.calories)
-        val sugar: TextView = view.findViewById(R.id.sugar)
+    private val diffCallback = object : DiffUtil.ItemCallback<Fruits>() {
+        override fun areItemsTheSame(oldItem: Fruits, newItem: Fruits): Boolean {
+            return oldItem.id == newItem.id
+        }
 
+        override fun areContentsTheSame(oldItem: Fruits, newItem: Fruits): Boolean {
+            return oldItem == newItem
+        }
+
+    }
+
+    private val differ = AsyncListDiffer(this, diffCallback)
+
+    class ViewHolder(binding: FruitItemBinding) : RecyclerView.ViewHolder(binding.root) {
+        val name = binding.name
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.fruit_item, parent, false)
-        return ViewHolder(view)
+        val layoutInflater = LayoutInflater.from(parent.context)
+        return ViewHolder(FruitItemBinding.inflate(layoutInflater, parent, false))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.name.text = "Name: " + fruitList[position].name
-        holder.family.text = "Family: " + fruitList[position].family
-        holder.genus.text = "Genus: " + fruitList[position].genus
-        holder.order.text = "Order: " + fruitList[position].order
-        holder.carbohydrates.text =
-            "Carbohydrates: " + fruitList[position].nutritions.carbohydrates.toString()
-        holder.protein.text = "Protein: " + fruitList[position].nutritions.carbohydrates.toString()
-        holder.fat.text = "Fat: " + fruitList[position].nutritions.fat.toString()
-        holder.calories.text = "Calories: " + fruitList[position].nutritions.calories.toString()
-        holder.sugar.text = "Sugar: " + fruitList[position].nutritions.sugar.toString()
-
+        holder.name.text = fruitList[position].name
+        holder.itemView.setOnClickListener {
+            onItemClick.onClick(fruitList[position])
+        }
     }
 
-    override fun getItemCount() = fruitList.size
+    override fun getItemCount() = differ.currentList.size
+}
+
+class ClickListener(val clickListener: (fruit: Fruits) -> Unit) {
+    fun onClick(fruit: Fruits) = clickListener(fruit)
 }

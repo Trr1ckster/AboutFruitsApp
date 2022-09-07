@@ -1,14 +1,11 @@
 package com.example.aboutfruits.network
 
 import com.example.aboutfruits.model.Fruits
-import retrofit2.Call
+import com.example.aboutfruits.utils.Constants.Companion.BASE_URL
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
-
-
-private const val BASE_URL = "https://www.fruityvice.com/api/fruit/"
-
 
 private val retrofit = Retrofit.Builder()
     .addConverterFactory(GsonConverterFactory.create())
@@ -17,9 +14,11 @@ private val retrofit = Retrofit.Builder()
 
 interface FruitApiService {
     @GET("all")
-    fun getAllFruits(): Call<List<Fruits>>
+   suspend fun getAllFruits(): Response<List<Fruits>>
 }
 
 object FruitsApi {
-    val retrofitService: FruitApiService = retrofit.create(FruitApiService::class.java)
+    val retrofitService: FruitApiService by lazy {
+        retrofit.create(FruitApiService::class.java)
+    }
 }

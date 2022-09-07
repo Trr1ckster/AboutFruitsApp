@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/McDan/AndroidStudioProjects/AboutFruits/app/src/main/res/drawable/loading_animation.xml" value="0.1185" />
         <entry key="..\:/Users/McDan/AndroidStudioProjects/AboutFruits/app/src/main/res/layout/activity_main.xml" value="0.14130434782608695" />
+        <entry key="..\:/Users/McDan/AndroidStudioProjects/AboutFruits/app/src/main/res/layout/fragment_details.xml" value="0.22" />
         <entry key="..\:/Users/McDan/AndroidStudioProjects/AboutFruits/app/src/main/res/layout/fragment_main.xml" value="0.14175724637681159" />
         <entry key="..\:/Users/McDan/AndroidStudioProjects/AboutFruits/app/src/main/res/layout/fruit_item.xml" value="0.4046242774566474" />
       </map>
