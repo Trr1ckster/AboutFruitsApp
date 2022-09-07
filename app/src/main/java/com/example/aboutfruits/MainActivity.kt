@@ -1,6 +1,5 @@
 package com.example.aboutfruits
 
-
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
