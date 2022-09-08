@@ -12,6 +12,7 @@ import com.example.aboutfruits.R
 import com.example.aboutfruits.adapter.Adapter
 import com.example.aboutfruits.adapter.ClickListener
 import com.example.aboutfruits.databinding.FragmentMainBinding
+import com.example.aboutfruits.utils.Status
 
 class MainFragment : Fragment() {
 
@@ -38,7 +39,21 @@ class MainFragment : Fragment() {
             recyclerAdapter.setFruitListItems(it)
         }
 
+        viewModel.status.observe(viewLifecycleOwner) {
+            when (it) {
+                Status.LOADING -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                }
+                Status.SUCCESS -> {
+                    binding.progressBar.visibility = View.GONE
+                }
+                Status.ERROR -> {
+                    binding.noConnection.visibility = View.VISIBLE
+                }
+            }
+
+        }
+
         return binding.root
     }
-
 }
