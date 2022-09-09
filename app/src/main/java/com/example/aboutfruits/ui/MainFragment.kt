@@ -49,6 +49,7 @@ class MainFragment : Fragment() {
                 }
                 Status.ERROR -> {
                     binding.noConnection.visibility = View.VISIBLE
+                    binding.progressBar.visibility = View.GONE
                 }
             }
 
